@@ -13,6 +13,7 @@ public class LunchOrderTestVer1 {
 		System.out.println("\t 9. 나가기");		
 		System.out.println("******************************************");
 		System.out.println("***** Food Mart에 오신것을 환영합니다");
+		
 		Scanner scan = new Scanner(System.in);
 		int menuNo = -1;
 		String menuName = "";
