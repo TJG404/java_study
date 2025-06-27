@@ -36,14 +36,14 @@ public class LunchOrderTestVer1 {
 					System.exit(0);
 					break;
 				default: 
-					System.out.println("메뉴 준비중 입니다.");
+					System.out.println("=> 메뉴 준비중 입니다.");
 			}//switch			
 
 		} else {
-			System.out.println("올바르지 않은 입력값입니다.");
+			System.out.println("=> 올바르지 않은 입력값입니다.");
 		}//if
 		
-		System.out.println("주문하신 메뉴는 "+ menuName +", 가격은 "+menuPrice+"원 입니다.");
+		System.out.println("=> 주문하신 메뉴는 "+ menuName +", 가격은 "+menuPrice+"원 입니다.");
 		
 		
 		//2. 주문 메뉴 결제		
@@ -54,15 +54,15 @@ public class LunchOrderTestVer1 {
 				if(charge >= menuPrice) {
 					change = charge - menuPrice;
 				} else {
-					System.out.println("요금이 부족합니다. 다시 입력해 주세요");
+					System.out.println("=> 요금이 부족합니다. 다시 입력해 주세요");
 				}			
 				
 			} else {
-				System.out.println("올바르지 않은 입력값입니다.");
+				System.out.println("=> 올바르지 않은 입력값입니다.");
 			}//if
 		
 		//3. 주문 내역 출력 : 주문한 메뉴는 (햄버거), 결제금액(), 잔돈() 입니다.
-		System.out.println("주문한 메뉴는 "+menuName+", 결제금액("+menuPrice+"), 잔돈("+change+") 입니다.");
+		System.out.println("=> 주문한 메뉴는 "+menuName+", 결제금액("+menuPrice+"), 잔돈("+change+") 입니다.");
 
 	}
 
