@@ -85,7 +85,7 @@ public class DrinkOrderTestVer1 {
 	
 				
 		//step 4: 주문 완료
-		System.out.println("주문 완료 ---------------------------------->>");
+		System.out.println("결제 완료 ---------------------------------->>");
 		System.out.println("[종료]");
 		System.out.println("이용해주셔서 감사합니다.");
 		
