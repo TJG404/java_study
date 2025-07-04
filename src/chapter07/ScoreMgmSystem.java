@@ -54,12 +54,15 @@ public class ScoreMgmSystem {
 				break;
 			case 3: 
 				search();	
+				showMenu();
 				break;
 			case 4: 
 				update();	
+				showMenu();
 				break;
 			case 5: 
 				remove();	
+				showMenu();
 				break;
 			case 9: 
 				System.out.println("-- 성적관리 시스템 종료 --");
@@ -103,18 +106,19 @@ public class ScoreMgmSystem {
 		if(count != 0) {
 			System.out.println("------------------------------------------");
 			System.out.print("학생명\t국어\t영어\t수학\t총점\t평균\n ");
-			System.out.println("------------------------------------------");	
-			int i = 0;
+			System.out.println("------------------------------------------");
+			
 			for(Student student : sList) {
-				if(i < count) {
+				if(student != null ) {
 					System.out.print(student.name +"\t");
 					System.out.print(student.kor +"\t");
 					System.out.print(student.eng +"\t");
 					System.out.print(student.math +"\t");
 					System.out.print(student.getTot() +"\t");
 					System.out.print(student.getAvg() +"\n");	
+				} else { 
+					break; 
 				}
-				i++;
 			}
 			System.out.println("------------------------------------------");
 		} else {
@@ -122,18 +126,130 @@ public class ScoreMgmSystem {
 		}
 	}
 	
+	/*
+	 * 학생명을 검색하여 주소를 리턴하는 메소드
+	 */
+	public int searchIndex(String pname) {
+		System.out.print(pname + "학생명> "); //[검색]학생명>, [수정]학생명>, [삭제]학생명>
+		String searchName = scan.next();
+		int searchIdx = -1;
+		for(int i=0; i<count; i++) {
+			Student student = sList[i];
+			if(student.name.equals(searchName)) searchIdx = i; 
+		}
+		
+		return searchIdx;
+	}
+	
+	
+	public void search() {
+		if(count != 0) {
+			System.out.println("=> 학생 정보를 검색하세요");
+			int searchIdx = searchIndex("[검색]");	
+			if(searchIdx != -1) {
+				System.out.println("-----------------------------------------");
+				System.out.println("\t\t 검색 결과");
+				System.out.println("-----------------------------------------");
+				System.out.println("학생명\t국어\t영어\t수학\t총점\t평균");		
+				System.out.println("-----------------------------------------");
+				System.out.print(sList[searchIdx].name +"\t");							
+				System.out.print(sList[searchIdx].kor +"\t");							
+				System.out.print(sList[searchIdx].eng +"\t");							
+				System.out.print(sList[searchIdx].math +"\t");							
+				System.out.print(sList[searchIdx].getTot() +"\t");							
+				System.out.print(sList[searchIdx].getAvg() +"\n");		
+				System.out.println("-----------------------------------------");
+									
+				System.out.print("계속 검색 하시겠습니까?(계속:아무키, 종료:n)> ");
+				if(scan.next().equals("n")) showMenu();
+				else search();
+			} else {
+				System.out.println("=> 검색 데이터 없음");
+				
+				System.out.print("계속 검색 하시겠습니까?(계속:아무키, 종료:n)> ");
+				if(scan.next().equals("n")) showMenu();
+				else search();
+				
+			}
+		
+		} else {
+			System.out.println("=> 등록된 데이터 없음, 등록부터 진행해 주세요");
+		}		
+	}//search	
 	
 	public void update() {
-		System.out.println("update");
+		//1. 수정할 학생명이 존재여부 검색 : 유-> 새로운 성적 입력 후 수정
+		//1. 수정할 학생명이 존재여부 검색 : 무-> 검색 데이터 존재X, 반복진행
+		if(count != 0) { //데이터 등록 여부 체크
+			System.out.println("=> 학생 정보를 수정하세요");			
+			int modiIdx = searchIndex("[수정]");
+			if(modiIdx == -1) {
+				System.out.println("수정할 데이터가 존재X, 다시 입력해주세요");
+				System.out.print("계속 수정?(계속:아무키, 종료:n)> ");
+				if(scan.next().equals("n")) showMenu();  					
+				else update();
+			} else {
+				System.out.print("국어> ");
+				sList[modiIdx].kor = scan.nextInt();
+				
+				System.out.print("영어> ");
+				sList[modiIdx].eng = scan.nextInt();
+				
+				System.out.print("수학> ");
+				sList[modiIdx].math = scan.nextInt();
+								
+				System.out.println("=> 수정 완료!!");
+				System.out.println("-----------------------------------------");
+				System.out.println("\t\t 수정 결과");
+				System.out.println("-----------------------------------------");
+				System.out.println("학생명\t국어\t영어\t수학\t총점\t평균");		
+				System.out.println("-----------------------------------------");
+				System.out.print(sList[modiIdx].name +"\t");							
+				System.out.print(sList[modiIdx].kor +"\t");							
+				System.out.print(sList[modiIdx].eng +"\t");							
+				System.out.print(sList[modiIdx].math +"\t");							
+				System.out.print(sList[modiIdx].getTot() +"\t");							
+				System.out.print(sList[modiIdx].getAvg() +"\n");		
+				System.out.println("-----------------------------------------");
+				
+				System.out.print("계속 수정?(계속:아무키, 종료:n)> ");
+				if(scan.next().equals("n")) showMenu();  					
+				else update();
+			}				
+				
+		} else {
+			System.out.println("=> 등록된 데이터가 없습니다. 등록을 진행해 주세요.");
+		}
 	}
 	
 	public void remove() {
-		System.out.println("remove");
+		if(count != 0) {
+			System.out.println("=> 학생 정보를 삭제하세요");
+			int deleteIdx = searchIndex("[삭제]");
+			if(deleteIdx != -1) {
+				for(int i=deleteIdx;i<count-1;i++) {	
+					sList[i] = sList[i+1];
+				}	
+				sList[count-1] = null;
+				count--;
+				
+				System.out.println("=> 삭제 완료!!");
+				System.out.print("계속 삭제?(계속:아무키, 종료:n)> ");
+				if(scan.next().equals("n")) showMenu();
+				else remove();
+				
+			} else {
+				System.out.println("삭제할 데이터가 존재X, 다시 입력해주세요");
+				System.out.print("계속 삭제?(계속:아무키, 종료:n)> ");
+				if(scan.next().equals("n")) showMenu();
+				else remove();
+			}			
+			
+		} else {
+			System.out.println("=> 등록된 데이터가 없습니다. 등록을 진행해 주세요.");
+		}
 	}
 	
-	public void search() {
-		System.out.println("search");
-	}	
 	
 }//class
 
