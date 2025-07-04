@@ -215,7 +215,7 @@ public class ScoreMgmSystem {
 				System.out.print("계속 수정?(계속:아무키, 종료:n)> ");
 				if(scan.next().equals("n")) showMenu();  					
 				else update();
-			}				
+			}			
 				
 		} else {
 			System.out.println("=> 등록된 데이터가 없습니다. 등록을 진행해 주세요.");
