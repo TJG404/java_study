@@ -11,42 +11,104 @@ public class ScoreMgmSystem {
 	String admin;
 	Student student;
 	Scanner scan = new Scanner(System.in);
-//	Student[] sList = new Student[10];
+	Student[] sList = new Student[10];
+	int count = 0;
 	
 	//Constructor
-	public ScoreMgmSystem() {}
 	
 	//Method
-	public void insert() {
-		System.out.println("-- insert --");
-		student = new Student();
+	/*
+	 * 메뉴 선택
+	 */
+	public void showMenu() {
+		System.out.println("-----------------------------------------");
+		System.out.println("더조은 고등학교 성적관리 프로그램");		
+		System.out.println("-----------------------------------------");
+		System.out.println("1. 학생 등록");		
+		System.out.println("2. 학생 리스트 출력");		
+		System.out.println("3. 학생 성적 검색");		
+		System.out.println("4. 학생 성적 수정");		
+		System.out.println("5. 학생 삭제");		
+		System.out.println("9. 프로그램 종료");		
+		System.out.println("-----------------------------------------");
 		
-		System.out.print("학생명> ");
-		student.name = scan.next();
+		System.out.print("메뉴선택(숫자)> ");
+//		int menu = scan.nextInt();		
+//		choiceMenu(menu);
 		
-		System.out.print("국어> ");
-		student.kor = scan.nextInt();
-		
-		System.out.print("영어> ");
-		student.eng = scan.nextInt();
-		
-		System.out.print("수학> ");
-		student.math = scan.nextInt();
-		
-		System.out.println("=> 등록 완료!!");		
+		menuCheck(scan.nextInt());
 	}
 	
-	public void show() {
-		System.out.println("--------------------------------");
+	/*
+	 * 선택한 메뉴를 체크하여 기능별 메소드 호출
+	 */
+	public void menuCheck(int menu) {
+		switch(menu) {
+			case 1: 
+				insert();
+				showMenu();
+				break;
+			case 2: 
+				showList();	
+				showMenu();
+				break;
+			case 3: 
+				search();	
+				break;
+			case 4: 
+				update();	
+				break;
+			case 5: 
+				remove();	
+				break;
+			case 9: 
+				System.out.println("-- 성적관리 시스템 종료 --");
+				System.exit(0);
+				break;	
+			default:
+				System.out.println("=> 메뉴 준비 중~");
+				showMenu();
+		}		
+	}
+	
+	public void insert() {
+		System.out.println("=> 학생 정보 등록하세요");
+		sList[count] = new Student();
+		
+		System.out.print("학생명> ");
+		sList[count].name = scan.next();
+		
+		System.out.print("국어> ");
+		sList[count].kor = scan.nextInt();
+		
+		System.out.print("영어> ");
+		sList[count].eng = scan.nextInt();
+		
+		System.out.print("수학> ");
+		sList[count].math = scan.nextInt();
+		
+		count++;
+		System.out.println("=> 등록 완료!!");		
+		
+		System.out.print("계속 등록(아무키나), 종료(n)?> ");	
+		if(scan.next().equals("n")) {
+			showMenu();
+		} else {
+			insert();
+		}
+	}
+	
+	public void showList() {
+		System.out.println("------------------------------------------");
 		System.out.print("학생명\t국어\t영어\t수학\t총점\t평균\n ");
-		System.out.println("--------------------------------");
+		System.out.println("------------------------------------------");
 		System.out.print(student.name +"\t");
 		System.out.print(student.kor +"\t");
 		System.out.print(student.eng +"\t");
 		System.out.print(student.math +"\t");
 		System.out.print(student.getTot() +"\t");
 		System.out.print(student.getAvg() +"\n");
-		System.out.println("--------------------------------");
+		System.out.println("------------------------------------------");
 	}
 	
 	public void update() {
