@@ -98,18 +98,30 @@ public class ScoreMgmSystem {
 		}
 	}
 	
+	
 	public void showList() {
-		System.out.println("------------------------------------------");
-		System.out.print("학생명\t국어\t영어\t수학\t총점\t평균\n ");
-		System.out.println("------------------------------------------");
-		System.out.print(student.name +"\t");
-		System.out.print(student.kor +"\t");
-		System.out.print(student.eng +"\t");
-		System.out.print(student.math +"\t");
-		System.out.print(student.getTot() +"\t");
-		System.out.print(student.getAvg() +"\n");
-		System.out.println("------------------------------------------");
+		if(count != 0) {
+			System.out.println("------------------------------------------");
+			System.out.print("학생명\t국어\t영어\t수학\t총점\t평균\n ");
+			System.out.println("------------------------------------------");	
+			int i = 0;
+			for(Student student : sList) {
+				if(i < count) {
+					System.out.print(student.name +"\t");
+					System.out.print(student.kor +"\t");
+					System.out.print(student.eng +"\t");
+					System.out.print(student.math +"\t");
+					System.out.print(student.getTot() +"\t");
+					System.out.print(student.getAvg() +"\n");	
+				}
+				i++;
+			}
+			System.out.println("------------------------------------------");
+		} else {
+			System.out.println("=> 등록된 데이터 없음, 등록부터 진행해 주세요");
+		}
 	}
+	
 	
 	public void update() {
 		System.out.println("update");

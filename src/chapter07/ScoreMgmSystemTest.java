@@ -7,7 +7,6 @@ public class ScoreMgmSystemTest {
 		
 		tjsms.showMenu();
 		
-		System.out.println("-- main 종료 --");
 	}
 
 }
