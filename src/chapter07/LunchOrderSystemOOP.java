@@ -8,6 +8,8 @@ public class LunchOrderSystemOOP {
 	String[] lunchMenuNames = {"햄버거(🍔)","피자요(🍕)","라멘요(🍜)","샐러드(🥗)"};
 	int[] lunchMenuPrice = {100,200,300,400};
 	LunchMenu[] lunchMenuList = new LunchMenu[4];  	//주문할 메뉴 : LunchMenu
+	LunchOrderItem[] orderItemList = new LunchOrderItem[5];
+	int orderCount = 0;
 	
 	//Constructor
 	//Method
@@ -36,7 +38,8 @@ public class LunchOrderSystemOOP {
 			System.out.print(menu.name + "\t");
 			System.out.print(menu.price + "\n");
 		}
-		System.out.println("******************************************");		
+		System.out.println("******************************************");	
+		selectLunchMenu();
 	}
 	
 	/*
@@ -69,6 +72,7 @@ public class LunchOrderSystemOOP {
 		System.out.println("\t 9. 프로그램 종료");		
 		System.out.println("******************************************");
 		System.out.println("***** Food Mart에 오신것을 환영합니다");	
+		
 		createLunchMenu();
 		selectMainMenu();
 
@@ -127,12 +131,54 @@ public class LunchOrderSystemOOP {
 	/*
 	 * 주문 : order()
 	 */
-	public void order(int lunchMenu) {}
+	public void order(int lunchMenu) {
+		orderItemList[orderCount] = new LunchOrderItem();
+		
+		//lunchMenuList의 메뉴 번호 확인
+		for(LunchMenu menu : lunchMenuList) {
+			if(menu.no == lunchMenu) {
+				int idx = searchOrderItemIdx(lunchMenu);
+				if(idx == -1) {
+					orderItemList[orderCount].no = menu.no;
+					orderItemList[orderCount].name = menu.name;
+					orderItemList[orderCount].price = menu.price;
+					orderItemList[orderCount].qty = 1;					
+				} else {
+					orderItemList[idx].qty += 1;	
+				}
+				break;
+			}
+		}
+		
+		orderCount++;
+		System.out.println("=> 주문 완료!!");
+		showMainMenu();
+	}
 	
 	/*
 	 * 주문 내역 : orderList()
 	 */
-	public void orderList() {}
+	public void orderList() {
+		if(orderCount == 0) {
+			System.out.println("=> 주문내역 존재X, 음식을 주문해주세요");			
+		} else {
+			System.out.println("-----------------------------------------");
+			System.out.println("\t음식 주문 내역");
+			System.out.println("-----------------------------------------");
+			System.out.println("번호\t메뉴명\t가격\t수량");
+			System.out.println("-----------------------------------------");
+			for(LunchOrderItem orderItem : orderItemList ) {
+				if(orderItem != null) {
+					System.out.print(orderItem.no + "\t");
+					System.out.print(orderItem.name + "\t");
+					System.out.print(orderItem.price + "\t");
+					System.out.print(orderItem.qty + "\n");
+				}
+			}
+			System.out.println("-----------------------------------------");
+		}
+		showMainMenu();
+	}
 	
 	/*
 	 * 결제 : payment()
