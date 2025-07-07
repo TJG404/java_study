@@ -34,7 +34,7 @@ public class ScoreMgmSystem {
 		
 		System.out.print("메뉴선택(숫자)> ");
 //		int menu = scan.nextInt();		
-//		choiceMenu(menu);
+//		menuCheck(menu);
 		
 		menuCheck(scan.nextInt());
 	}
