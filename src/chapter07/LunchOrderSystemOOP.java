@@ -8,8 +8,10 @@ public class LunchOrderSystemOOP {
 	String[] lunchMenuNames = {"햄버거(🍔)","피자요(🍕)","라멘요(🍜)","샐러드(🥗)"};
 	int[] lunchMenuPrice = {100,200,300,400};
 	LunchMenu[] lunchMenuList = new LunchMenu[4];  	//주문할 메뉴 : LunchMenu
-	LunchOrderItem[] orderItemList = new LunchOrderItem[5];
+	LunchOrderItem[] orderItemList = new LunchOrderItem[4];
 	int orderCount = 0;
+	int amount = 0; //결제금액-사용자 입력
+	int change = 0; //잔돈
 	
 	//Constructor
 	//Method
@@ -127,22 +129,37 @@ public class LunchOrderSystemOOP {
 		}
 	}
 	
+	/*
+	 * 주문아이템의 인덱스 검색
+	 */
+	public int searchOrderItemIdx(int lunchMenu) {
+		int idx = -1;
+		for(int i=0; i<orderCount; i++) {
+			LunchOrderItem orderItem = orderItemList[i];
+			if(orderItem.no == lunchMenu) idx = i;
+		}
+		
+		return idx;
+	}	
 	
 	/*
 	 * 주문 : order()
 	 */
-	public void order(int lunchMenu) {
-		orderItemList[orderCount] = new LunchOrderItem();
-		
+	public void order(int lunchMenu) {		
 		//lunchMenuList의 메뉴 번호 확인
 		for(LunchMenu menu : lunchMenuList) {
 			if(menu.no == lunchMenu) {
+				
 				int idx = searchOrderItemIdx(lunchMenu);
+				
 				if(idx == -1) {
+					orderItemList[orderCount] = new LunchOrderItem();
+					
 					orderItemList[orderCount].no = menu.no;
 					orderItemList[orderCount].name = menu.name;
 					orderItemList[orderCount].price = menu.price;
 					orderItemList[orderCount].qty = 1;					
+					orderCount++;
 				} else {
 					orderItemList[idx].qty += 1;	
 				}
@@ -150,8 +167,7 @@ public class LunchOrderSystemOOP {
 			}
 		}
 		
-		orderCount++;
-		System.out.println("=> 주문 완료!!");
+		System.out.println("=> 주문 완료!!"+orderCount);
 		showMainMenu();
 	}
 	
@@ -168,7 +184,7 @@ public class LunchOrderSystemOOP {
 			System.out.println("번호\t메뉴명\t가격\t수량");
 			System.out.println("-----------------------------------------");
 			for(LunchOrderItem orderItem : orderItemList ) {
-				if(orderItem != null) {
+				if(orderItem != null ) {
 					System.out.print(orderItem.no + "\t");
 					System.out.print(orderItem.name + "\t");
 					System.out.print(orderItem.price + "\t");
@@ -181,9 +197,47 @@ public class LunchOrderSystemOOP {
 	}
 	
 	/*
+	 * 결제 예정금액 산출
+	 */
+	public int totalPayment() {
+		int sum = 0;
+		for(LunchOrderItem orderItem : orderItemList ) {
+			if(orderItem != null) {
+				sum += orderItem.price * orderItem.qty;
+			}
+		}		
+		return sum;
+	}
+	
+	/*
 	 * 결제 : payment()
 	 */
-	public void payment() {}
+	public void payment() {
+		if(orderCount == 0) {
+			System.out.println("=> 주문내역 존재X, 음식을 주문해주세요");			
+		} else {	
+			int total = totalPayment();
+			System.out.println("=> 결제 예정 금액 : "+ total);
+			System.out.print("결제할 요금 입력(숫자)> ");
+			if(scan.hasNextInt()) {
+				amount += scan.nextInt();
+				System.out.println("=> 총 입력 금액 : " + amount);				
+				
+				if(amount >= total) {								
+					change = amount - total;
+					System.out.println("=> 결제 성공!!");					
+				} else {
+					System.out.println("=> 요금이 부족합니다. 다시 입력해 주세요");
+					payment();
+				}			
+				
+			} else {
+				System.out.println("=> 올바르지 않은 입력값입니다. 다시 입력해주세요.");
+				scan.next();
+			}//if
+		}
+		showMainMenu();
+	}
 	
 	/*
 	 * 결제 내역 : paymentList()
