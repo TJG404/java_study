@@ -9,6 +9,7 @@ public class LunchOrderSystemOOP {
 	int[] lunchMenuPrice = {100,200,300,400};
 	LunchMenu[] lunchMenuList = new LunchMenu[4];  	//주문할 메뉴 : LunchMenu
 	LunchOrderItem[] orderItemList = new LunchOrderItem[4];
+	LunchPaymentItem paymentItem;
 	int orderCount = 0;
 	int amount = 0; //결제금액-사용자 입력
 	int change = 0; //잔돈
@@ -143,6 +144,29 @@ public class LunchOrderSystemOOP {
 	}	
 	
 	/*
+	 * 주문리스트 초기화
+	 */
+	public void orderItemListInit() {
+//		orderItemList = new LunchOrderItem[4];
+		
+//		for(int i=0; i<orderCount; i++) {
+//			orderItemList[i] = null;			
+//		}
+		
+		int i=0;
+		for(LunchOrderItem orderItem : orderItemList) {
+			if(orderItem != null && i <= orderCount-1) {
+				orderItemList[i] = null;
+				i++;
+			} else {
+				break;
+			}			
+		}
+		
+		orderCount = 0;
+	}
+	
+	/*
 	 * 주문 : order()
 	 */
 	public void order(int lunchMenu) {		
@@ -215,7 +239,7 @@ public class LunchOrderSystemOOP {
 	public void payment() {
 		if(orderCount == 0) {
 			System.out.println("=> 주문내역 존재X, 음식을 주문해주세요");			
-		} else {	
+		} else {			
 			int total = totalPayment();
 			System.out.println("=> 결제 예정 금액 : "+ total);
 			System.out.print("결제할 요금 입력(숫자)> ");
@@ -225,7 +249,17 @@ public class LunchOrderSystemOOP {
 				
 				if(amount >= total) {								
 					change = amount - total;
-					System.out.println("=> 결제 성공!!");					
+					
+					paymentItem = new LunchPaymentItem();
+					paymentItem.name = orderItemList[0].name + "등";
+					paymentItem.totalPayment = total;
+					paymentItem.amount = amount;
+					paymentItem.change = change;					
+					System.out.println("=> 결제 성공!!");	
+					
+					//주문리스트 초기화
+					orderItemListInit();
+					
 				} else {
 					System.out.println("=> 요금이 부족합니다. 다시 입력해 주세요");
 					payment();
@@ -242,7 +276,23 @@ public class LunchOrderSystemOOP {
 	/*
 	 * 결제 내역 : paymentList()
 	 */
-	public void paymentList() {}
+	public void paymentList() {
+		if(paymentItem == null) {
+			System.out.println("=> 결제 내역X, 주문을 진행해주세요");
+		} else {
+			System.out.println("-----------------------------------------");
+			System.out.println("\t결제 내역");
+			System.out.println("-----------------------------------------");
+			System.out.println("주문명\t결제금액\t총입금액\t잔돈");
+			System.out.println("-----------------------------------------");
+			System.out.print(paymentItem.name + "\t");
+			System.out.print(paymentItem.totalPayment + "\t");
+			System.out.print(paymentItem.amount + "\t");
+			System.out.print(paymentItem.change + "\n");
+			System.out.println("-----------------------------------------");
+		}
+		showMainMenu();
+	}
 	
 }//class
 
