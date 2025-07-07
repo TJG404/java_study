@@ -1,8 +1,2 @@
-/**
- * 
- */
-/**
- * 
- */
 module java_study {
 }
