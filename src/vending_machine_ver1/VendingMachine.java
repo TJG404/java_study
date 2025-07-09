@@ -9,9 +9,13 @@ public class VendingMachine {
 	Menu[] orderMenuList; 	//user가 주문가능한 메뉴 
 	int orderMenuCount = 0;
 
-	String title;
-	User user;
+	String title; 	//자판기 회사명
+	User user; 		//자판기 사용자
 	int totalCoin;
+	Menu orderMenu;
+	int change;		//잔돈
+	
+	public static final int EXIT = 5;   //클래스명.상수명
 	
 	
 	public VendingMachine(User user) {
@@ -42,11 +46,19 @@ public class VendingMachine {
 	 */
 	public void selectMenu() {  //정확한 메뉴 선택!!!
 		System.out.println("=> 메뉴를 선택해 주세요.");
+		System.out.println("=> 취소는 ["+ VendingMachine.EXIT + "]번을 입력해주세요.");
 		int menuNo = user.selectMenu();
-		if(menuCheck(menuNo)) {
-			placeOrder(menuNo);
+		if(menuNo != VendingMachine.EXIT) {
+			if(menuCheck(menuNo)) {
+				placeOrder(menuNo);
+			} else {
+				selectMenu();
+			}
 		} else {
-			selectMenu();
+			System.out.println("********************************************");
+			System.out.println("=> 동전을 반환하고, 프로그램을 종료합니다.");
+			System.out.println("=> 반환 동전 : " + totalCoin);
+			System.exit(0);
 		}
 	}
 	
@@ -54,14 +66,40 @@ public class VendingMachine {
 	 * 주문
 	 */
 	public void placeOrder(int menuNo) {
-		
+		//주문가능한 메뉴리스트에서 선택한 menuNo를 비교하여 메뉴주소를 orderMenu에 대입
+		for(Menu menu : orderMenuList) {
+			if(menu != null) {
+				if(menu.getNo() == menuNo) orderMenu = menu;
+			} else break;
+		}	
+		System.out.println("=> 주문완료!!");
+		processPayment();
 	}
 	
 	/*
 	 * 결제
 	 */
 	public void processPayment() {
-		
+		if(orderMenu != null) {
+			int price = orderMenu.getPrice();
+			if(price <= totalCoin) {
+				change = totalCoin - price;
+				System.out.println("=> 결제 완료!!");
+				System.out.println("=> 음료 제조 중 ...");
+				reset();//사용한 객체 초기화 => orderMenuList, orderMenu, totalCount
+			}
+		}
+		finalCheck();
+	}
+	
+	/*
+	 * 종료 후 객체 초기화 
+	 */
+	public void reset() {
+		orderMenuList = null;
+		orderMenu = null;
+		totalCoin = 0;
+		orderMenuCount = 0;
 	}
 	
 	/*
@@ -69,6 +107,18 @@ public class VendingMachine {
 	 */
 	public void finalCheck() {
 		//잔돈이 최소 주문금액보다 크면 계속 주문
+		int price = menuList[menuList.length-1].getPrice();
+		if(change >= price) {
+			totalCoin = change;
+			System.out.println("=> 잔돈 : " + change);			
+			createOrderMenuList(totalCoin);		
+			showMenuList("주문 가능 메뉴 리스트");
+			selectMenu();				
+		} else {
+			//결제 내역이 궁금하다면???
+			System.out.println("=> 잔돈 : " + change);
+			System.out.println("=> 이용해 주셔서 감사합니다!!");			
+		}
 	}
 		
 	

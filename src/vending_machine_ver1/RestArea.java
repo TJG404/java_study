@@ -8,6 +8,7 @@ public class RestArea {
 	public RestArea() {
 		this("만남의 광장");
 	}
+	
 	public RestArea(String name) {
 		this.name = name; //멤버변수 초기화 작업
 		user = new User("정국");
