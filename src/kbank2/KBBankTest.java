@@ -6,7 +6,8 @@ public class KBBankTest {
 		BankSystem kbsystem = new BankSystem("KB");
 		kbsystem.showAccountList();  //은행시스템 확인
 		
-		AccountPaperVo accountPaper = AccountPaperVo.getInstance();  		
+		AccountPaperVo accountPaper = AccountPaperVo.getInstance();  
+		
 		BankMan staffPark = new BankMan("박보검", kbsystem); 		
 		Customer hong = new Customer("홍길동", "kb-1234", null, 0);
 		
@@ -24,7 +25,7 @@ public class KBBankTest {
 		staffPark.processWithdrawal();
 		
 		kbsystem.confirmBalance(hong.getAccountPaper()); //ATM(은행시스템)을 이용하여 잔액을 확인
-
+		
 	}
 
 }
