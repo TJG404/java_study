@@ -32,6 +32,8 @@ public class Customer {
 		this.accountPaper.setPassword(this.password);
 		this.accountPaper.setMoney(this.money);
 	}
+	
+	
 	public String getName() {
 		return name;
 	}
