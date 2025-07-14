@@ -29,6 +29,11 @@ public class ButtonTest {
 				System.exit(0);
 			}
 		});
+//		btnExit.addActionListener(
+//			e -> {
+//				System.exit(0);
+//			}
+//		);
 		
 		
 	}
