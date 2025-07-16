@@ -9,7 +9,7 @@ public class OuterTest {
 		Outer.Inner inner = new Outer.Inner();
 		System.out.println("inner.name --> " + inner.name);
 		System.out.println("Outer.Inner.name --> " + Outer.Inner.name);
-
+	
 	}
 
 }
