@@ -85,9 +85,9 @@ public class ScoreServiceImpl implements ScoreService{
 	public void list() {
 		if(getCount() != 0) {
 			List<Member> list = repository.findAll();	
-			System.out.println("--------------------------------------");
-			System.out.println("학번\t이름\t전공\t국어\t영어\t수학");
-			System.out.println("--------------------------------------");			
+			System.out.println("-------------------------------------------------");
+			System.out.println("학번\t\t\t이름\t\t전공\t국어\t영어\t수학");
+			System.out.println("-------------------------------------------------");
 			list.forEach((member) -> {
 				System.out.print(member.getNo() +" \t");
 				System.out.print(member.getName() +" \t");
@@ -96,6 +96,7 @@ public class ScoreServiceImpl implements ScoreService{
 				System.out.print(member.getEng() +" \t");
 				System.out.print(member.getMath() +" \n");
 			});
+			System.out.println("-------------------------------------------------");
 		} else {
 			System.out.println("=> 등록된 학생이 없습니다. ");
 		}
