@@ -111,9 +111,9 @@ public class ScoreServiceImpl implements ScoreService{
 	public void search() {
 		if(getCount() != 0) {
 			System.out.print("학번> ");
-			String no = scan.next();
+			String no = scan.next();			
+			Member member = repository.find(no);	
 			
-//			List<Member> list = repository.findAll();	
 //			System.out.println("-------------------------------------------------");
 //			System.out.println("학번\t\t\t이름\t\t전공\t국어\t영어\t수학");
 //			System.out.println("-------------------------------------------------");
