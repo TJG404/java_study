@@ -45,7 +45,7 @@ public class ScoreMgmSystem {
 			}			
 			
 		} else {
-			System.out.println("=> 올바르지 않은 형식입니다. 다시 선택해주세요");
+			System.out.println("🚫 올바르지 않은 형식입니다. 다시 선택해주세요");
 			scan.next();
 			selectMenu();
 		}
