@@ -16,8 +16,8 @@ public class BookManagementApplication {
 	public BookService service;
 	
 	public BookManagementApplication() {
-		service = new DefaultBookService(this);
 		scan = new Scanner(System.in);
+		service = new DefaultBookService(this);
 		showMenu();
 	}
 	
@@ -28,7 +28,7 @@ public class BookManagementApplication {
 		//배열을 이용하여 메뉴 출력
 		String[] labels = {"도서 등록", "도서 목록 조회", "도서 검색", "도서 수정", "도서 삭제", "종료"};
 		
-		System.out.println("======= 📕📖📚 도서 관리 시스템 📕📖📚 =======");
+		System.out.println("=== 📕📖📚 도서 관리 시스템 📕📖📚 ===");
 		System.out.println("전체 도서수 :  " + service.getCount());
 		System.out.println("-------------------------------------------------");
 		for(int i=0;i<labels.length; i++) {

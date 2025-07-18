@@ -2,11 +2,14 @@ package com.bookmgm.service;
 
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 import com.bookmgm.application.BookManagementApplication;
 import com.bookmgm.model.Book;
+import com.bookmgm.repository.AladinBookRepository;
 import com.bookmgm.repository.BookRepository;
 import com.bookmgm.repository.InMemoryBookRepository;
+import com.bookmgm.repository.Yes24BookRepository;
 
 public class DefaultBookService implements BookService{
 	BookManagementApplication bma;
@@ -15,7 +18,8 @@ public class DefaultBookService implements BookService{
 	public DefaultBookService() {}
 	public DefaultBookService(BookManagementApplication bma) {
 		this.bma = bma;
-		repository = new InMemoryBookRepository();
+		selectRepository();
+//		repository = new InMemoryBookRepository();
 	}
 	
 	
@@ -59,10 +63,30 @@ public class DefaultBookService implements BookService{
 	}	
 	
 	/**
+	 * 도서관 선택
+	 */
+	public void selectRepository() {
+		System.out.println("-------------------------------------------------");
+		System.out.println("1. 교육센터\t2. 알라딘\t3. 예스24");
+		System.out.println("-------------------------------------------------");
+		System.out.print("도서관 선택>");
+		int rno = bma.scan.nextInt();
+		if(rno == 1) {
+			repository = new InMemoryBookRepository();
+		} else if(rno == 2) {
+			repository = new AladinBookRepository();
+		} else if(rno == 3) {
+			repository = new Yes24BookRepository();
+		}		
+	}	
+	
+	
+	/**
 	 * 도서 등록
 	 */
 	@Override
 	public void register() {
+//		selectRepository();
 		Book book = createBook();
 		if(repository.insert(book)) {
 			System.out.println("✅도서가 등록되었습니다.");
@@ -135,7 +159,7 @@ public class DefaultBookService implements BookService{
 			System.out.print("도서번호>");
 			Book book = repository.select(bma.scan.next());
 			if(book != null) {				
-				repository.update(createBook(book));				
+				repository.update(createBook(book));					
 				System.out.println("✅도서가 수정되었습니다.");
 				printBook(book);				
 			} else {
