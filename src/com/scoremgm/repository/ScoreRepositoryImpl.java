@@ -1,12 +1,28 @@
 package com.scoremgm.repository;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+
 import com.scoremgm.model.Member;
 
 public class ScoreRepositoryImpl implements ScoreRepository{
 	
 	List<Member> storage = new ArrayList<Member>(); 
+	
+	@Override
+	public void remove(String no) {
+		no = "2025-" + no;
+		Iterator<Member> ie = storage.iterator();
+		while(ie.hasNext()) {
+			Member memeber = ie.next();
+			if(memeber.getNo().equals(no)) {
+				ie.remove();
+				break;
+			}
+		}
+	}
+	
 	
 	@Override
 	public void update(Member member) {

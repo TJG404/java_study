@@ -208,14 +208,14 @@ public class ScoreServiceImpl implements ScoreService{
 				System.out.print("정말로 삭제하시겠습니까(y:삭제,아무키:취소)?");
 				if(scan.next().equals("y")) {
 					repository.remove(no);
+					System.out.println("=> 삭제 완료!!");
 				}				
 			} 
 		} else {
 			System.out.println("=> 등록된 학생이 없습니다. ");
 		}
 		sms.showMenu();
-		sms.selectMenu();
-		
+		sms.selectMenu();		
 	}
 	
 	@Override
