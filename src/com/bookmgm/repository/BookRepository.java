@@ -9,5 +9,6 @@ public interface BookRepository {
 	Book select(String id);
 	void update(Book book);
 	void remove(String id);
+	void remove(Book book);
 	int getCount();
 }
