@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  * 멀티 채팅 서버 구현
@@ -11,6 +12,7 @@ import java.net.Socket;
 public class Server {
 
 	public final static int PORT = 9000;
+	public static ArrayList<ClientHandler> list = new ArrayList<ClientHandler>();
 	
 	public static void main(String[] args) {
 		try {
@@ -23,7 +25,9 @@ public class Server {
 				System.out.println("✅클라이언트 접속!!");
 				
 				//클라이언트 별로 접속하고 별도 종료 진행!!!
-				new ClientHandler(s).start();
+				ClientHandler ch = new ClientHandler(s);
+				ch.start();
+				list.add(ch);
 			}			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -41,18 +45,31 @@ class ClientHandler extends Thread {
 			this.s = s;
 			this.output = new DataOutputStream(s.getOutputStream());  //전송
 			this.input = new DataInputStream(s.getInputStream());	//수신
+			String str = "[서버]환영합니다~^^";
+			output.writeUTF(str);	
 		} catch (Exception e) {
 			e.printStackTrace();
 		}		
 	}
 	
 	public void run() {
-		try {
-			String str = "[서버]환영합니다~^^";
-			output.writeUTF(str);	
-			
-			String recievedMsg = input.readUTF();
-			System.out.println(recievedMsg);
+		try {	
+				boolean flag = true;
+				while(flag) {
+					String recievedMsg = input.readUTF();
+					if(recievedMsg.equals("exit")) {
+						System.out.println("클라이언트 종료!!");
+						flag = false;
+					} else {
+						Server.list.forEach(ch -> {
+							try {
+								ch.output.writeUTF(recievedMsg);							
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						});
+					}
+				}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
