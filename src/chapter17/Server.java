@@ -45,9 +45,9 @@ class ClientHandler extends Thread {
 			this.s = s;
 			this.output = new DataOutputStream(s.getOutputStream());  //전송
 			this.input = new DataInputStream(s.getInputStream());	//수신
-			String str = "[서버]환영합니다~^^";
+			String str = "[서버] 환영합니다~^^";
 			output.writeUTF(str);	
-		} catch (Exception e) {
+		} catch (Exception e) { 
 			e.printStackTrace();
 		}		
 	}
@@ -59,6 +59,7 @@ class ClientHandler extends Thread {
 					String recievedMsg = input.readUTF();
 					if(recievedMsg.equals("exit")) {
 						System.out.println("클라이언트 종료!!");
+						Server.list.remove(this);  
 						flag = false;
 					} else {
 						Server.list.forEach(ch -> {
