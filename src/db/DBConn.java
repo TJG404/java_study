@@ -2,6 +2,7 @@ package db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -13,6 +14,7 @@ public class DBConn {
 	
 	Connection connection;
 	protected Statement stmt;
+	protected PreparedStatement pstmt;
 	protected ResultSet rs;
 	
 	//Constructor
@@ -24,6 +26,15 @@ public class DBConn {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	//PreparedStatment 생성
+	public void getPreparedStatement(String sql) {
+		try {
+			//2단계 : PreparedStatment 객체 생성
+			pstmt = connection.prepareStatement(sql);
+			System.out.println("---->> 2단계 성공!!");			
+		} catch (Exception e) {	e.printStackTrace(); }
 	}
 	
 	//Statment 생성

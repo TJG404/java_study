@@ -1,12 +1,7 @@
 package chapter20_JDBC;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import db.DBConn;
 
 public class EmployeeDao extends DBConn{
@@ -26,7 +21,6 @@ public class EmployeeDao extends DBConn{
 			rs = stmt.executeQuery(sql);
 			
 			while(rs.next()) {
-				//rs 객체의 1 row --> EmployeeVo 저장
 				EmployeeVo  employee = new EmployeeVo();
 				employee.setEmpId(rs.getString(1));
 				employee.setEmpName(rs.getString(2));

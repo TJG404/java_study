@@ -1,43 +1,52 @@
 package chapter20_JDBC;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import db.DBConn;
 
-public class DepartmentDao {
-		//Field
-		private String url = "jdbc:mysql://127.0.0.1:3306/hrdb2019";
-		private String user = "root";
-		private String password = "mysql1234";
-		
-		Connection connection;
-		Statement stmt;
-		ResultSet rs;
-			
-		//Constructor
-		public DepartmentDao() {
-			try { 
-				//1 단계			
-				connection = DriverManager.getConnection(url, user, password);
-				System.out.println("---->> 1단계 성공!!");			
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
+public class DepartmentDao extends DBConn{
+
+	public DepartmentDao() {
+			super();
 		}
-		
-		//2단계: Statement
-		public void getStatement() {
+				
+		//3단계: CRUD 기능에 따라 메소드 생성	
+		public boolean insert(DepartmentVo department) {
+			boolean result = false;
 			try {
-				//2단계 : Statement 객체 생성
-				stmt = connection.createStatement();
-				System.out.println("---->> 2단계 성공!!");			
-			} catch (Exception e) {	e.printStackTrace(); }
+				String sql = """
+						insert into department(dept_id, dept_name, unit_id, start_date)
+										values(?, ?, ?, curdate());
+					""";				
+				getPreparedStatement(sql);
+				pstmt.setString(1, department.getDeptId());
+				pstmt.setString(2, department.getDeptName());
+				pstmt.setString(3, department.getUnitId());
+				
+				int rows = pstmt.executeUpdate();
+				if(rows == 1) result = true;
+				
+//				getStatement();
+//				if(stmt != null) {
+//					StringBuilder sb = new StringBuilder();
+//					sb.append("insert into department(dept_id, dept_name, unit_id, start_date)");
+//					sb.append(" values('");
+//					sb.append(department.getDeptId() + "','");
+//					sb.append(department.getDeptName() + "','");
+//					sb.append(department.getUnitId() + "',");
+//					sb.append(" curdate() )");
+//					
+//					int resultRow = stmt.executeUpdate(sb.toString());
+//					if(resultRow == 1) result = true; 
+//				}
+				
+			} catch (Exception e) {	e.printStackTrace();	}
+			return result;
 		}
-		
-		//3단계: CRUD 기능에 따라 메소드 생성
+	
+	
+		/**
+		 * 전체 리스트 */
 		public List<DepartmentVo> getList() {
 			List<DepartmentVo> list = new ArrayList<DepartmentVo>();
 			String sql = """
@@ -48,6 +57,7 @@ public class DepartmentDao {
 						from department
 					""";
 			try {
+				getStatement();
 				rs = stmt.executeQuery(sql);	
 				while(rs.next()) {
 					DepartmentVo  department = new DepartmentVo();
@@ -61,18 +71,6 @@ public class DepartmentDao {
 			} catch (Exception e) { e.printStackTrace(); }
 			
 			return list;
-		}
-		
-		//5단계: close
-		public void close() {
-			try {
-				
-				if(rs != null) rs.close();
-				if(stmt != null) stmt.close();
-				if(connection != null) connection.close();
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}	
+		}		
+	
 }
