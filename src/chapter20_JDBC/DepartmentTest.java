@@ -1,23 +1,32 @@
-package chapter18;
+package chapter20_JDBC;
 
 import java.util.List;
 
-public class DeptTest {
+public class DepartmentTest {
 
 	public static void main(String[] args) {
-		DeptDao deptDao = new DeptDao();
-		deptDao.getStatement();
-		List<DeptVo> list = deptDao.getResult();
+		DepartmentDao dao = new DepartmentDao();
+		dao.getStatement();
+		List<DepartmentVo> list = dao.getList();
 		
-		System.out.println("부서아이디\t\t부서명\t\t본부아이디\t생성일\n");
-		list.forEach(department -> {
+		list.forEach((department) -> {
 			System.out.print(department.getDeptId() + "\t");
 			System.out.print(department.getDeptName() + "\t");
 			System.out.print(department.getUnitId() + "\t");
 			System.out.print(department.getStartDate() + "\n");
 		});
 		
-		deptDao.close();
+		dao.close();
+
 	}
 
 }
+
+
+
+
+
+
+
+
+

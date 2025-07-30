@@ -1,12 +1,18 @@
-package chapter18;
+package chapter20_JDBC;
 
-public class DeptVo {
+public class DepartmentVo {
+	int rno;
 	String deptId;
 	String deptName;
 	String unitId;
 	String startDate;
 	
-	
+	public int getRno() {
+		return rno;
+	}
+	public void setRno(int rno) {
+		this.rno = rno;
+	}
 	public String getDeptId() {
 		return deptId;
 	}
@@ -31,6 +37,5 @@ public class DeptVo {
 	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
-	
-	
+
 }
