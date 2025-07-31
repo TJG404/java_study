@@ -86,6 +86,7 @@ public class MemberDao extends DBConn implements GenericInterface<MemberVo>{
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+//			rows = 0;
 		}
 		return rows;
 	}
