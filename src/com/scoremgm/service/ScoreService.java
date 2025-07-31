@@ -5,7 +5,7 @@ public interface ScoreService {
 	public void exit();
 	int getCount();
 	public void list();
-//	public void search();
+	public void search();
 //	public void update();
 //	public void delete();
 }

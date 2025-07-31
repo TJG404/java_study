@@ -65,21 +65,34 @@ public class ScoreRepositoryImpl extends DBConn
 //	}
 //	
 //	
-//	@Override
-//	public MemberVo find(String no) {
-//		no = "2025-" + no;
-//		MemberVo member = null;
-//		
-//		if(no != null) {
-//			for(MemberVo m : storage) {
-//				if(m.getNo().equals(no)) {
-//					member = m;
-//				}	
-//			}
-//		}
-//		
-//		return member;
-//	}
+	@Override
+	public MemberVo find(String mid) {
+		MemberVo member = null;
+		String sql = """
+				select mid, name, department, kor, eng, math, mdate
+					from score_member
+					where mid = ?
+				""";
+		try {
+			getPreparedStatement(sql);
+			pstmt.setString(1, mid);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				member = new MemberVo();
+				member.setMid(rs.getString(1));
+				member.setName(rs.getString(2));
+				member.setDepartment(rs.getString(3));
+				member.setKor(rs.getInt(4));
+				member.setEng(rs.getInt(5));
+				member.setMath(rs.getInt(6));
+				member.setMdate(rs.getString(7));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return member;
+	}
 	
 	@Override
 	public List<MemberVo> findAll() {

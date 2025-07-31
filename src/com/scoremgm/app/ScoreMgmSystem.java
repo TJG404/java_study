@@ -36,7 +36,7 @@ public class ScoreMgmSystem {
 			switch(scan.nextInt()) {
 				case REGISTER:	service.register();		break;
 				case LIST:		service.list();			break;
-//				case SEARCH: 	service.search();		break;
+				case SEARCH: 	service.search();		break;
 //				case UPDATE:	service.update();		break;
 //				case DELETE:	service.delete();		break;
 				case EXIT:		service.exit();			break;

@@ -102,10 +102,11 @@ public class ScoreServiceImpl implements ScoreService{
 		if(getCount() != 0) {
 			List<MemberVo> list = repository.findAll();	
 			System.out.println("-------------------------------------------------");
-			System.out.println("번호\t이름\t\t전공\t국어\t영어\t수학");
+			System.out.println("번호\t학번\t\t이름\t\t전공\t국어\t영어\t수학");
 			System.out.println("-------------------------------------------------");
 			list.forEach((member) -> {
 				System.out.print(member.getRno() +"\t");
+				System.out.print(member.getMid() +"\t");
 				System.out.print(member.getName() +"\t");
 				System.out.print(member.getDepartment() +"\t");
 				System.out.print(member.getKor() +"\t");
@@ -119,39 +120,39 @@ public class ScoreServiceImpl implements ScoreService{
 		sms.showMenu();
 		sms.selectMenu();
 	}
-//	
-//	/**
-//	 * 검색 : 학번 기준
-//	 */
-//	@Override
-//	public void search() {
-//		if(getCount() != 0) {
-//			System.out.print("학번(뒤에4자리)> ");
-//			String no = scan.next();			
-//			MemberVo member = repository.find(no);	
-//			
-//			if(member != null) {			
-//				System.out.println("=> 검색 결과!!");
-//				System.out.println("-------------------------------------------------");
-//				System.out.println("학번\t\t\t이름\t\t전공\t국어\t영어\t수학");
-//				System.out.println("-------------------------------------------------");
-//				System.out.print(member.getNo() +" \t");
-//				System.out.print(member.getName() +" \t");
-//				System.out.print(member.getDepartment() +" \t");
-//				System.out.print(member.getKor() +" \t");
-//				System.out.print(member.getEng() +" \t");
-//				System.out.print(member.getMath() +" \n");
-//				System.out.println("-------------------------------------------------");
-//			} else {
-//				System.out.println("=> 학생 정보 없음!!");
-//			}
-//			
-//		} else {
-//			System.out.println("=> 등록된 학생이 없습니다. ");
-//		}
-//		sms.showMenu();
-//		sms.selectMenu();		
-//	}
+	
+	/**
+	 * 검색 : 학번 기준
+	 */
+	@Override
+	public void search() {
+		if(getCount() != 0) {
+			System.out.print("학번> ");
+			String mid = scan.next();			
+			MemberVo member = repository.find(mid);	
+			
+			if(member != null) {			
+				System.out.println("=> 검색 결과!!");
+				System.out.println("-------------------------------------------------");
+				System.out.println("학번\t\t이름\t\t전공\t국어\t영어\t수학");
+				System.out.println("-------------------------------------------------");
+				System.out.print(member.getMid() +"\t");
+				System.out.print(member.getName() +"\t");
+				System.out.print(member.getDepartment() +"\t");
+				System.out.print(member.getKor() +"\t");
+				System.out.print(member.getEng() +"\t");
+				System.out.print(member.getMath() +"\n");
+				System.out.println("-------------------------------------------------");
+			} else {
+				System.out.println("=> 학생 정보 없음!!");
+			}
+			
+		} else {
+			System.out.println("=> 등록된 학생이 없습니다. ");
+		}
+		sms.showMenu();
+		sms.selectMenu();		
+	}
 //	
 //	@Override
 //	public void update() {
