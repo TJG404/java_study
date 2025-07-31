@@ -6,7 +6,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 import com.scoremgm.app.ScoreMgmSystem;
-import com.scoremgm.model.Member;
+import com.scoremgm.model.MemberVo;
 import com.scoremgm.repository.ScoreRepository;
 import com.scoremgm.repository.ScoreRepositoryImpl;
 
@@ -49,7 +49,7 @@ public class ScoreServiceImpl implements ScoreService{
 	 * @param no 학번
 	 * @return List
 	 */
-	public List createMemberInfo(Member member) {
+	public List createMemberInfo(MemberVo member) {
 		String[] labels = {"국어","영어","수학"};
 		List memberInfo = new ArrayList();
 		
@@ -77,7 +77,7 @@ public class ScoreServiceImpl implements ScoreService{
 	public void register() {		
 		List memberInfo = createMemberInfo();
 
-		Member member = new Member();
+		MemberVo member = new MemberVo();
 		member.setNo((String)memberInfo.get(0));
 		member.setName((String)memberInfo.get(1));
 		member.setDepartment((String)memberInfo.get(2));
@@ -102,7 +102,7 @@ public class ScoreServiceImpl implements ScoreService{
 	@Override
 	public void list() {
 		if(getCount() != 0) {
-			List<Member> list = repository.findAll();	
+			List<MemberVo> list = repository.findAll();	
 			System.out.println("-------------------------------------------------");
 			System.out.println("학번\t\t\t이름\t\t전공\t국어\t영어\t수학");
 			System.out.println("-------------------------------------------------");
@@ -130,7 +130,7 @@ public class ScoreServiceImpl implements ScoreService{
 		if(getCount() != 0) {
 			System.out.print("학번(뒤에4자리)> ");
 			String no = scan.next();			
-			Member member = repository.find(no);	
+			MemberVo member = repository.find(no);	
 			
 			if(member != null) {			
 				System.out.println("=> 검색 결과!!");
@@ -160,7 +160,7 @@ public class ScoreServiceImpl implements ScoreService{
 		if(getCount() != 0) {
 			System.out.print("학번(뒤에4자리)> ");
 			String no = scan.next();			
-			Member member = repository.find(no);  //학생 정보 - old 
+			MemberVo member = repository.find(no);  //학생 정보 - old 
 			
 			if(member != null) {			
 				//수정할 학생 정보 입력!! 학번 제외!!
@@ -202,7 +202,7 @@ public class ScoreServiceImpl implements ScoreService{
 		if(getCount() != 0) {
 			System.out.print("학번(뒤에4자리)> ");
 			String no = scan.next();			
-			Member member = repository.find(no);  
+			MemberVo member = repository.find(no);  
 			
 			if(member != null) {			
 				System.out.print("정말로 삭제하시겠습니까(y:삭제,아무키:취소)?");
