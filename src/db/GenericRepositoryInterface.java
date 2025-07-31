@@ -4,10 +4,10 @@ import java.util.List;
 import com.scoremgm.model.MemberVo;
 
 public interface GenericRepositoryInterface<T> {
-	void remove(String no);
-	void update(T entity);
-	T find(String no);
-	boolean insert(T entity);
+	int insert(T entity);
 	int getCount();
 	List<T> findAll();
+//	int remove(String no);
+//	int update(T entity);
+//	T find(String no);
 }
