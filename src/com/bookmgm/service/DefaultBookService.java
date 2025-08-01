@@ -101,7 +101,7 @@ public class DefaultBookService implements BookService{
 	@Override
 	public void list() {
 		if(getCount() != 0) {
-			List<Book> library = repository.findAll();
+			List<Book> library = repository.findAll();			
 			System.out.println("-------------------------------------------------");
 			library.forEach(book -> {
 				System.out.print("[" + book.getBid() + "]\t");

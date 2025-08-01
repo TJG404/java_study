@@ -50,6 +50,7 @@ public class DBConn {
 	//객체 종료 
 	public void close() {
 		try {			
+			System.out.println("-- 데이터베이스 객체 종료 -- ");
 			if(rs != null) rs.close();
 			if(stmt != null) stmt.close();
 			if(connection != null) connection.close();
