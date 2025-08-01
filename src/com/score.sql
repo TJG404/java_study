@@ -45,4 +45,16 @@ end $$
 delimiter ;
 /************************************************/
 
-select * from `order`;
+select * from score_member;
+
+
+
+
+
+
+
+
+
+
+
+
